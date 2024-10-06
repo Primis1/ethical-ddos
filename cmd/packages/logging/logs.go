@@ -24,8 +24,6 @@ type application struct {
 var infoLog = log.New(os.Stdout, "INFO: \t", log.Ltime)
 var errorLog = log.New(os.Stderr, "ERROR: \t", log.Ltime)
 
-var path string
-
 func NewLogger(Level logLevel) *application {
 	return &application{
 		level:    Level,
